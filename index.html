@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.24.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
+        }
+    </script>
+    <title>Phone Hunter</title>
+</head>
+
+<body class="space-y-10">
+    <header class="space-y-5 text-center mx-auto w-2/4 relative">
+        <h1 class="text-5xl">Phone Hunter</h1>
+        <input id="search-field" class="px-10 py-3 bg-gray-100 w-full" placeholder="Search" type="text">
+        <button id="search-btn" class="px-4 py-2 bg-slate-500 hover:bg-slate-600 transition-all text-white rounded-lg">Search</button>
+    </header>
+    <main>
+        <section id="phones-container" class="grid grid-cols-1 lg:grid-cols-2 gap-10 place-items-center">
+
+        </section>
+    </main>
+    <section>
+        <!-- Put this part before body tag -->
+        <input type="checkbox" id="my-modal-5" class="modal-toggle" />
+        <div class="modal" id="modal-container">
+
+        </div>
+    </section>
+    <section id="loader-container" class="text-center hidden">
+        <progress class="progress w-56"></progress>
+    </section>
+    <script src="app/app.js"></script>
+</body>
+
+</html>
