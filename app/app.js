@@ -1,6 +1,6 @@
 const loadPhonesData = async (searchQuarry) => {
     loader(true)
-    const url = `https://openapi.programming-hero.com/api/phones?search=${searchQuarry}`
+    let url = `https://openapi.programming-hero.com/api/phones?search=${searchQuarry}`
     if (searchQuarry === '') {
         url = `https://openapi.programming-hero.com/api/phones?search=a`
     }
@@ -10,7 +10,7 @@ const loadPhonesData = async (searchQuarry) => {
 }
 
 const loadPhoneBySlug = async(slug) => {
-    const url = `https://openapi.programming-hero.com/api/phone/${slug}`;
+    let url = `https://openapi.programming-hero.com/api/phone/${slug}`;
     const response = await fetch(url);
     const data = await response.json();
     console.log('slug');
@@ -18,13 +18,15 @@ const loadPhoneBySlug = async(slug) => {
 }
 
 const searchBtn = document.getElementById('search-btn');
-searchBtn.addEventListener('click',() => {
+searchBtn.addEventListener('click', inputTypedValue)
+function inputTypedValue() {
+    const searchResultContainer = document.getElementById('search-result-container');
+    searchResultContainer.classList.add('hidden')
     const searchField = document.getElementById('search-field');
     const searchString = searchField.value;
     loadPhonesData(searchString)
     searchField.value = '';
-})
-
+}
 const displayPhone = (phones) => {
     const phonesContainer = document.getElementById('phones-container');
     phonesContainer.textContent = '';
@@ -100,6 +102,9 @@ const loadSearchResult = async (searchQuarry) => {
 
 const searchField = document.getElementById('search-field');
 searchField.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        inputTypedValue()
+    }
     const searchResultContainer = document.getElementById('search-result-container')
     searchResultContainer.classList.remove('hidden')
     if (event.target.value.length === 0){
@@ -117,8 +122,7 @@ const displaySearchResult = (searchResult) => {
         const {brand,phone_name,slug,image} = result;
         const tableRow = document.createElement('tr');
         tableRow.innerHTML = `
-            <label for="my-modal-5" >
-                <td  class="cursor-pointer" onclick="loadPhoneBySlug('${slug}')">
+                <td  class="cursor-pointer">
                 <div class="flex items-center space-x-3">
                     <div class="avatar">
                         <div class="mask mask-squircle w-12 h-12">
@@ -127,12 +131,11 @@ const displaySearchResult = (searchResult) => {
                         </div>
                     </div>
                     <div>
-                        <div class="font-bold">${phone_name}</div>
+                        <div class="font-bold">${phone_name} <label onclick="loadPhoneBySlug('${slug}')" for="my-modal-5" class="px-4 py-2 bg-slate-500 hover:bg-slate-600 transition-all text-white rounded-lg cursor-pointer">Details</label></div>
                         <div class="text-sm opacity-50">${brand}</div>
                     </div>
                 </div>
             </td>
-            </label>
         `
         tableBody.appendChild(tableRow)
     })
